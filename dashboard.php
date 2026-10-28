@@ -1,9 +1,13 @@
+<?php
+session_start();
+require 'Root.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
 </head>
 <style>
     *{
@@ -179,8 +183,8 @@
         <!-- Bagian Item -->
         <div class="item">
             <a href="">Dashboard</a>
-            <a href="">Input Data</a>
-            <a href="">Data Penduduk</a>
+            <a href="dashboard.php">Input Data</a>
+            <a href="TampilPenduduk.php">Data Penduduk</a>
         </div>
 
         <!-- Untuk Log Out dan Setting -->
@@ -190,9 +194,20 @@
         </div>
      </div>
     <main class="content">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div style="background: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div style="background: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+                <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+            </div>
+        <?php endif; ?>
         <div class="form-container">
             <h2>Form Input Data Penduduk</h2>
-            <form action="proses.php" method="POST">
+            <form action="ktp-input.php" method="POST">
             
                 <!-- NIK (varchar 16, Primary Key)[cite: 1] -->
                 <div class="form-group">
@@ -273,7 +288,7 @@
                 <!-- Masa_Berlaku (varchar 10)[cite: 1] -->
                 <div class="form-group">
                     <label for="Masa_Berlaku">Masa Berlaku:</label>
-                    <input type="text" id="Masa_Berlaku" name="Masa_Berlaku" maxlength="10" placeholder="Seumur Hidup / Tanggal">
+                    <input type="text" id="Masa_Berlaku" name="Masa_Berlaku" maxlength="20" placeholder="Seumur Hidup / Tanggal">
                 </div>
 
                 <!-- Gol_Darah (varchar 2)[cite: 1] -->
@@ -282,7 +297,7 @@
                     <input type="text" id="Gol_Darah" name="Gol_Darah" maxlength="2" placeholder="A / B / AB / O">
                 </div>
 
-                <button type="submit" class="btn-submit">Simpan Data</button>
+                <button type="submit" name="submit" class="btn-submit">Simpan Data</button>
             </form>
         </div>
     </main>
